@@ -7,7 +7,6 @@
 import rospy
 import numpy as np
 import cv2  # OpenCV module
-import imutils
 import math
 
 from sensor_msgs.msg import Image, CameraInfo
