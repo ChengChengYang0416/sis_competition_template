@@ -12,7 +12,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "robot_command_client");
   ros::NodeHandle nh;
   ros::ServiceClient client = nh.serviceClient<send_command_to_robot::data>\
-      ("robot_service");
+      ("data");
 
   ros::Subscriber command_sub = nh.subscribe<geometry_msgs::Pose>
               ("/robot_command", 10, command_cb);
