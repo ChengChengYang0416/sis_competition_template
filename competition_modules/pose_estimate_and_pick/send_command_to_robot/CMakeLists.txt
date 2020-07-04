@@ -62,7 +62,7 @@ find_package(OpenCV REQUIRED COMPONENTS core imgproc highgui objdetect)
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
-  robot_service.srv
+  data.srv
 )
 
 ## Generate actions in the 'action' folder
