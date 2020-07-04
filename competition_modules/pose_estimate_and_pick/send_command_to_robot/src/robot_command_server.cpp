@@ -22,7 +22,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "robot_command_server");
   ros::NodeHandle nh;
 
-  ros::ServiceServer service = nh.advertiseService("data", recieve_command);
+  ros::ServiceServer service = nh.advertiseService("grasp", recieve_command);
   ros::spin();
   return 0;
 }
