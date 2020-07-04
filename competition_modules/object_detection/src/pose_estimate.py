@@ -17,6 +17,7 @@ from std_msgs.msg import ColorRGBA
 from cv_bridge import CvBridge, CvBridgeError
 import message_filters
 import math
+from tf.transformations import quaternion_matrix
 
 rospy.init_node('object_detection', anonymous=True)
 
@@ -220,8 +221,17 @@ def rosRGBDCallBack(rgb_data, depth_data):
                 if (cX_blue < len(depth) and cY_blue < len(depth[0])):
             	    cZ_blue = depth[cX_blue][cY_blue]
             	    xyz_blue = getXYZ(cX_blue, cY_blue, cZ_blue/1000, fx, fy, cx, cy)
-		    xyz = [xyz_blue[0], xyz_blue[1], xyz_blue[2]]
-            	    print(xyz)
+
+                    matrix = quaternion_matrix([0.926, 0.008, 0.377, -0.002])
+                    matrix[0][3] = 0.048
+                    matrix[1][3] = -0.007
+                    matrix[2][3] = 0.568
+                    xyz = np.array([xyz_blue[0], xyz_blue[1], xyz_blue[2], 1])
+                    final_xyz = matrix.dot(xyz)
+                    print(matrix)
+                    print(xyz)
+            	    print(final_xyz)
+
             	    command = Pose()
             	    command.position.x = xyz_blue[0]
             	    command.position.y = xyz_blue[1]
