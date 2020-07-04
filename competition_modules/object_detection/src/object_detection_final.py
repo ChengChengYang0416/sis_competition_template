@@ -361,19 +361,19 @@ def rosRGBDCallBack(rgb_data, depth_data):
                 cv2.line(cv_image, (cX_blue, cY_blue), (ell_x, ell_y), (0,255,0), 3)                    # x-axis
                 cv2.line(cv_image, (cX_blue, cY_blue), (cX_blue, cY_blue-100), (255,0,0), 3)             # z-axis
                 cv2.line(cv_image, (cX_blue, cY_blue), (ell_x_short, ell_y_short), (0,0,255), 3)        # y-axix
-            cZ_blue = depth[cX_blue][cY_blue]
-            xyz_blue = getXYZ(cX_blue, cY_blue, cZ_blue, fx, fy, cx, cy)
-            #print(xyz_blue)
-            command = Pose()
-            command.position.x = xyz_blue[0]
-            command.position.y = xyz_blue[1]
-            command.position.z = xyz_blue[2]
-            command.orientation.x = 0
-            command.orientation.y = 0.707
-            command.orientation.z = 0
-            command.orientation.w = 0.707
-            print(command)
-            robot_command_pub.publish(command)
+            	cZ_blue = depth[cX_blue][cY_blue]
+            	xyz_blue = getXYZ(cX_blue, cY_blue, cZ_blue, fx, fy, cx, cy)
+            	#print(xyz_blue)
+            	command = Pose()
+            	command.position.x = xyz_blue[0]
+            	command.position.y = xyz_blue[1]
+            	command.position.z = xyz_blue[2]
+            	command.orientation.x = 0
+            	command.orientation.y = 0.707
+            	command.orientation.z = 0
+            	command.orientation.w = 0.707
+            	print(command)
+            	robot_command_pub.publish(command)
             ###################################################################
 
             if detect_shape:
