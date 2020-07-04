@@ -36,6 +36,7 @@ int main(int argc, char **argv)
   srv.request.pose.orientation.y = 0.707;
   srv.request.pose.orientation.z = 0;
   srv.request.pose.orientation.w = 0.707;
+  srv.request.id = 0;
 
   /*
   while (ros::ok()){
