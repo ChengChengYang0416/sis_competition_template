@@ -220,6 +220,9 @@ def rosRGBDCallBack(rgb_data, depth_data):
                 if (cX_blue < len(depth) and cY_blue < len(depth[0])):
             	    cZ_blue = depth[cX_blue][cY_blue]
             	    xyz_blue = getXYZ(cX_blue, cY_blue, cZ_blue/1000, fx, fy, cx, cy)
+		    xyz_blue[0] = xyz_blue[0]*(-2)
+		    xyz_blue[1] = xyz_blue[1]
+		    xyz_blue[2] = 0.05
             	    print(xyz_blue)
             	    command = Pose()
             	    command.position.x = xyz_blue[0]
