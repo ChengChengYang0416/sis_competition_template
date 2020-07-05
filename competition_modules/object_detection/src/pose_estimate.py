@@ -230,10 +230,10 @@ def rosRGBDCallBack(rgb_data, depth_data):
                     #final_xyz = matrix.dot(xyz)
 
 		    
-		    matrix = quaternion_matrix([0.937, -0.001, -0.349, 0.004])
-                    matrix[0][3] = 0.408
-                    matrix[1][3] = 0.001
-                    matrix[2][3] = -0.292
+		    matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
+                    matrix[0][3] = -0.117
+                    matrix[1][3] = 0.000
+                    matrix[2][3] = 0.488
 		    xyz = np.array([xyz_blue[2], -xyz_blue[0], -xyz_blue[1], 1])
                     final_xyz = matrix.dot(xyz)
             	    print(final_xyz)
