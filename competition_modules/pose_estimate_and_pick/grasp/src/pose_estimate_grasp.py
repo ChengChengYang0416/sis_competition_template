@@ -267,6 +267,8 @@ def rosRGBDCallBack(rgb_data, depth_data):
 		    global counter
 		    if (final_xyz[0] <= 0.45):
 			final_xyz_re = np.array([final_xyz[0]+0.1, -final_xyz[1]+0.02, 0.05])
+			if (final_xyz[1] >= 0.03):
+			    final_xyz_re2 = np.array([final_xyz_re[0]-0.1, final_xyz_re[1], 0.05])
 			if (angle_pre <= 90):
 			    orien = np.array([0.2705981, 0.6532815, -0.2705981, 0.6532815])
 			else:
