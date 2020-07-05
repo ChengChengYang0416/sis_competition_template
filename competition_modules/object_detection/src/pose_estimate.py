@@ -239,7 +239,7 @@ def rosRGBDCallBack(rgb_data, depth_data):
 		    #matrix_rot_x = np.array([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 		    #final_xyz_rot_x = matrix_rot_x.dot(final_xyz)
 		    if (final_xyz[0] <= 0.45):
-			final_xyz_re = np.array([final_xyz[0], -final_xyz[1], 0.05])
+			final_xyz_re = np.array([final_xyz[0]+0.1, -final_xyz[1]+0.02, 0.05])
             	    	print(final_xyz_re)
 
             	    command = Pose()
