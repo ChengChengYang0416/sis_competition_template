@@ -265,20 +265,28 @@ def rosRGBDCallBack(rgb_data, depth_data):
 		    #final_xyz_rot_x = matrix_rot_x.dot(final_xyz)
 		    global haveGrasp
 		    global counter
+		    leftOrRight = False
 		    if (final_xyz[0] <= 0.45):
 			final_xyz_re = np.array([final_xyz[0]+0.1, -final_xyz[1]+0.02, 0.05])
 			if (final_xyz[1] >= 0.03):
 			    final_xyz_re2 = np.array([final_xyz_re[0]-0.1, final_xyz_re[1], 0.05])
+			    leftOrRight = True
+			    print(final_xyz_re2)
+			else :
+			    leftOrRight = False
+			    print(final_xyz_re)
 			if (angle_pre <= 90):
 			    orien = np.array([0.2705981, 0.6532815, -0.2705981, 0.6532815])
 			else:
 			    orien = np.array([-0.2705981, 0.6532815, 0.2705981, 0.6532815])
-                        #orien = np.array([0.0, 0.0, 0.0, 0.0])
-            	    	print(final_xyz_re)
+            	    	
 			counter = counter + 1
 			if (counter >= 100 and haveGrasp == False):
                             haveGrasp = True
-                            grasping(final_xyz_re[0], final_xyz_re[1], final_xyz_re[2], orien[0], orien[1], orien[2], orien[3])
+			    if (leftOrRight == False):
+                                grasping(final_xyz_re[0], final_xyz_re[1], final_xyz_re[2], orien[0], orien[1], orien[2], orien[3])
+			    else :
+				grasping(final_xyz_re2[0], final_xyz_re2[1], final_xyz_re2[2], orien[0], orien[1], orien[2], orien[3])
 		    if (counter >= 1000):
 			counter = 0
             	    command = Pose()
