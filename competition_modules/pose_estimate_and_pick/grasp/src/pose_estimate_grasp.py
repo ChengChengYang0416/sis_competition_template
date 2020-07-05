@@ -18,6 +18,7 @@ from cv_bridge import CvBridge, CvBridgeError
 import message_filters
 import math
 from tf.transformations import quaternion_matrix
+from grasp.srv import data, dataRequest, dataResponse
 
 rospy.init_node('object_detection', anonymous=True)
 
@@ -45,6 +46,8 @@ cx = msg.P[2]
 cy = msg.P[6]
 
 depth = []
+haveGrasp = False
+counter = 1
 
 def main():
     useHSV   = True
@@ -65,6 +68,27 @@ def main():
             ts.registerCallback(rosRGBDCallBack)
 
     rospy.spin()
+
+def grasping(pos_x, pos_y, pos_z, ori_x, ori_y, ori_z, ori_w):
+    print("hello")
+    rospy.wait_for_service('grasp')
+
+    try :
+        grasp_client = rospy.ServiceProxy('grasp', data)
+        command = dataRequest()
+        command.pose.position.x = pos_x
+        command.pose.position.y = pos_y
+        command.pose.position.z = pos_z
+        command.pose.orientation.x = ori_x
+        command.pose.orientation.y = ori_y
+        command.pose.orientation.z = ori_z
+        command.pose.orientation.w = ori_w
+        command.id = 0
+        res = grasp_client(command)
+        
+    
+    except rospy.ServiceException as e:
+        print("Service call failed: %s"%e)
 
 def convert_depth_image(ros_image):
 
@@ -222,25 +246,31 @@ def rosRGBDCallBack(rgb_data, depth_data):
             	    cZ_blue = depth[cX_blue][cY_blue]
             	    xyz_blue = getXYZ(cX_blue, cY_blue, cZ_blue/1000, fx, fy, cx, cy)
 
-		    # rosrun tf tf_echo /arm_base_link /head_tilt_link
-		    matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
+		            # rosrun tf tf_echo /arm_base_link /head_tilt_link
+		            matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
                     matrix[0][3] = -0.117
                     matrix[1][3] = 0.000
                     matrix[2][3] = 0.488
 
-		    # rosrun tf tf_echo /base_link /head_tilt_link
-		    #matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
+		            # rosrun tf tf_echo /base_link /head_tilt_link
+		            #matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
                     #matrix[0][3] = -0.02
                     #matrix[1][3] = 0.000
                     #matrix[2][3] = 0.585
-		    xyz = np.array([xyz_blue[2], -xyz_blue[0], -xyz_blue[1], 1])
+		            xyz = np.array([xyz_blue[2], -xyz_blue[0], -xyz_blue[1], 1])
                     final_xyz = matrix.dot(xyz)
 
-		    #matrix_rot_x = np.array([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
-		    #final_xyz_rot_x = matrix_rot_x.dot(final_xyz)
-		    if (final_xyz[0] <= 0.45):
-			final_xyz_re = np.array([final_xyz[0]+0.1, -final_xyz[1]+0.02, 0.05])
+		            #matrix_rot_x = np.array([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
+		            #final_xyz_rot_x = matrix_rot_x.dot(final_xyz)
+		            if (final_xyz[0] <= 0.45):
+			            final_xyz_re = np.array([final_xyz[0]+0.1, -final_xyz[1]+0.02, 0.05])
+                        orien = np.array([0.0, 0.707, 0.0, 0.707])
             	    	print(final_xyz_re)
+			            counter = counter + 1
+			            if (counter >= 100 and haveGrasp == False):
+                            haveGrasp = True
+                            grasping(final_xyz_re[0], final_xyz_re[1], final_xyz_re[2], orien[0], orien[1], orien[2], orien[3])
+				
 
             	    command = Pose()
             	    command.position.x = xyz_blue[0]
