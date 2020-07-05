@@ -223,16 +223,16 @@ def rosRGBDCallBack(rgb_data, depth_data):
             	    xyz_blue = getXYZ(cX_blue, cY_blue, cZ_blue/1000, fx, fy, cx, cy)
 
 		    # rosrun tf tf_echo /arm_base_link /head_tilt_link
-		    #matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
-                    #matrix[0][3] = -0.117
-                    #matrix[1][3] = 0.000
-                    #matrix[2][3] = 0.488
+		    matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
+                    matrix[0][3] = -0.117
+                    matrix[1][3] = 0.000
+                    matrix[2][3] = 0.488
 
 		    # rosrun tf tf_echo /base_link /head_tilt_link
-		    matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
-                    matrix[0][3] = -0.02
-                    matrix[1][3] = 0.000
-                    matrix[2][3] = 0.585
+		    #matrix = quaternion_matrix([0.937, 0.001, 0.349, -0.004])
+                    #matrix[0][3] = -0.02
+                    #matrix[1][3] = 0.000
+                    #matrix[2][3] = 0.585
 		    xyz = np.array([xyz_blue[2], -xyz_blue[0], -xyz_blue[1], 1])
                     final_xyz = matrix.dot(xyz)
             	    print(final_xyz)
