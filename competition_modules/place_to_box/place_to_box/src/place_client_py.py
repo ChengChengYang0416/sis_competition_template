@@ -13,7 +13,7 @@ def placing():
     try :
         place_client = rospy.ServiceProxy('place', data)
         command = dataRequest()
-        command.pose.position.x = 0.2
+        command.pose.position.x = 0.45
         command.pose.position.y = 0.0
         command.pose.position.z = 0.05
         command.pose.orientation.x = 0.0
