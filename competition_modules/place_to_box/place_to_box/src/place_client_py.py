@@ -5,6 +5,7 @@ import numpy as np
 import time
 from place_to_box.srv import data, dataRequest, dataResponse
 from geometry_msgs.msg import Point, Pose, Twist, Vector3, Quaternion
+import cv2
 
 def placing():
     print("hello")
@@ -31,4 +32,10 @@ def placing():
 if __name__ == "__main__":
 	
     placing()
+    originalImage = cv2.imread('test.jpg')
+    grayImage = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
+  
+    (thresh, blackAndWhiteImage) = cv2.threshold(grayImage, 127, 255, cv2.THRESH_BINARY)
+ 
+    cv2.imshow('Black white image', blackAndWhiteImage)
     print("place client")
