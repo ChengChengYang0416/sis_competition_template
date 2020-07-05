@@ -289,6 +289,7 @@ def rosRGBDCallBack(rgb_data, depth_data):
 				grasping(final_xyz_re2[0], final_xyz_re2[1], final_xyz_re2[2], orien[0], orien[1], orien[2], orien[3])
 		    if (counter >= 1000):
 			counter = 0
+
             	    command = Pose()
             	    command.position.x = xyz_blue[0]
             	    command.position.y = xyz_blue[1]

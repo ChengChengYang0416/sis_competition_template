@@ -12,9 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   message_generation
   std_msgs
-  nav_msgs
-  roscpp
-  tf
 )
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -74,7 +71,6 @@ generate_messages(
    DEPENDENCIES
    std_msgs
    geometry_msgs
-   nav_msgs
 )
 
 ################################################
@@ -109,7 +105,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES sis_competition
- CATKIN_DEPENDS rospy std_msgs message_runtime roscpp geometry_msgs nav_msgs tf
+ CATKIN_DEPENDS rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
