@@ -236,7 +236,7 @@ def rosRGBDCallBack(rgb_data, depth_data):
                     matrix[2][3] = -0.304
 		    xyz = np.array([xyz_blue[2], -xyz_blue[0], -xyz_blue[1], 1])
                     final_xyz = matrix.dot(xyz)
-            	    print(final_xyz)
+            	    print(xyz_blue)
 
             	    command = Pose()
             	    command.position.x = xyz_blue[0]
