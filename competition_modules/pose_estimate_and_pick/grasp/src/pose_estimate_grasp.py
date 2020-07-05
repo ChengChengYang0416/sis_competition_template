@@ -266,7 +266,7 @@ def rosRGBDCallBack(rgb_data, depth_data):
 		    global counter
 		    if (final_xyz[0] <= 0.45):
 			final_xyz_re = np.array([final_xyz[0]+0.1, -final_xyz[1]+0.02, 0.05])
-                        orien = np.array([0.0, 0.707, 0.0, 0.707])
+                        orien = np.array([0.0, 0.0, 0.0, 0.0])
             	    	print(final_xyz_re)
 			counter = counter + 1
 			if (counter >= 100 and haveGrasp == False):
